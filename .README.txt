@@ -1,0 +1,36 @@
+**********************************************************************************************************
+* This code was adapted from the following source and is only used for learning to develop AI using NEAT *
+* https://www.youtube.com/watch?v=2o-jMhXmmxA&list=LL&index=1&t=19s                                      *
+**********************************************************************************************************
+
+This program contains the follwing files:
+    1. car.py
+    2. draw_window.py
+    3. genome_eval.py
+    4. run_AI.py
+
+Key design choices are explained here:
+1. ===== car.py =====
+
+"car.py" contains the class "Car" which is used to interact with the game surroundings. The car has four corners which are calculated using cosine (x) and sin (y) graphs.
+The use of these trigonometric functions relates back to the fact that the "angle" variable will constantly be added or deducted by a constant. Hence, there is no limit to
+the angle, yet, we need repeating values; this is why we choose to use the trigonometric functions as it contains a constant pattern that allows us to obtain repeating
+values for the X and Y coordinates.
+
+The same applies for the radar function. We have five radars in total which span out to a distance of 300 pixels. Again, the x and y coordinates are calculated using cosine
+and sin functions but are separated by constant of 45 degrees which are used to only detect the front of the car. Visually, this gives us five radars within the range of 180
+degrees.
+
+The car uses these radars to calculate the distance from what is considered out of bounds (i.e. any white pixel) and serves as input to our ANN to help it decide on whether
+to turn left or right. The car is constantly moving forward.
+
+2. ===== genome_eval.py =====
+
+"genome_eval.py" contains the NEAT algorithm which takes the distances found by the radars (from the car to the out of bounds) to determine what move it should take (left or
+right); this means our sequential ANN has FIVE inputs and TWO outputs. Any car that goes out of bounds is removed from the ANN, leaving only the fittest to continue with
+mutations.
+
+If the output received from the TANH activation function is 0, we turn left, otherwise we turn right.
+
+INFORMATION PERTAINING TO THE CONFIG FILE CAN BE FOUND HERE:
+https://neat-python.readthedocs.io/en/latest/
